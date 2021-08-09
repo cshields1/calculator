@@ -42,6 +42,16 @@ btnDecimal.addEventListener("click", addDecimal);
 function addDecimal() {
   btnDecimal.setAttribute("disabled", "");
 }
+// undo button
+btnBackspace.addEventListener("click", deleteNumber);
+function deleteNumber() {
+  if (display.textContent) {
+    display.textContent = display.textContent.slice(
+      0,
+      display.textContent.length - 1
+    );
+  }
+}
 
 // add
 function add(a, b) {
@@ -78,10 +88,5 @@ function operate(operator, a, b) {
 // throw an error if user tries to divide by 0
 
 // differentiate operator and keypad buttons
-// undo button
-btnBackspace.addEventListener("click", deleteNumber);
-function deleteNumber() {
-  if (displayValue) {
-    displayValue = displayValue.slice(0, displayValue.length - 1);
-  }
-}
+
+// keyboard support
