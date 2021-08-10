@@ -26,64 +26,71 @@ let shouldClearDisplay = false;
 
 keypadBtns.forEach((button) => {
   button.value = button.textContent;
-  button.addEventListener("click", function () {
-    if (shouldClearDisplay) {
-      display.textContent = "";
-      shouldClearDisplay = false;
-    }
-    display.textContent += this.value;
-  });
+  button.addEventListener("click", updateDisplay);
 });
+signBtn.addEventListener("click", changeSign);
+operatorBtns.forEach((button) => button.addEventListener("click", setOperator));
+equalsBtn.addEventListener("click", evaluate);
+decimalBtn.addEventListener("click", checkDecimal);
+backspaceBtn.addEventListener("click", deleteNumber);
+clearBtn.addEventListener("click", clearAll);
 
-signBtn.addEventListener("click", () => {
+function updateDisplay() {
+  if (shouldClearDisplay) {
+    display.textContent = "";
+    checkDecimal();
+    shouldClearDisplay = false;
+  }
+  display.textContent += this.value;
+}
+
+function changeSign() {
   if (!display.textContent.includes("-")) {
     display.textContent = "-" + display.textContent;
   } else {
     display.textContent = display.textContent.slice(1);
   }
-});
+}
 
-operatorBtns.forEach((button) =>
-  button.addEventListener("click", function () {
-    if (operator) evaluate();
-    a = Number(display.textContent) || 0;
-    operator = this.operator;
-    shouldClearDisplay = true;
-  })
-);
+function setOperator() {
+  if (operator) evaluate();
+  a = Number(display.textContent) || 0;
+  operator = this.operator;
+  shouldClearDisplay = true;
+}
 
-equalsBtn.addEventListener("click", evaluate);
+function evaluate() {
+  b = Number(display.textContent) || 0;
+  display.textContent = operator(a, b);
+  a = Number(display.textContent);
+  b = null;
+  operator = null;
+  checkDecimal();
+  shouldClearDisplay = true;
+}
 
-decimalBtn.addEventListener("click", () =>
-  decimalBtn.setAttribute("disabled", "")
-);
+function checkDecimal() {
+  if (display.textContent.includes(".")) {
+    decimalBtn.setAttribute("disabled", "");
+  } else {
+    decimalBtn.removeAttribute("disabled");
+  }
+}
 
-backspaceBtn.addEventListener(
-  "click",
-  () =>
-    (display.textContent = display.textContent.slice(
-      0,
-      display.textContent.length - 1
-    ))
-);
+function deleteNumber() {
+  display.textContent = display.textContent.slice(
+    0,
+    display.textContent.length - 1
+  );
+}
 
-clearBtn.addEventListener("click", () => {
+function clearAll() {
   a = null;
   b = null;
   operator = null;
   display.textContent = "";
   shouldClearDisplay = false;
-  decimalBtn.removeAttribute("disabled");
-});
-
-function evaluate() {
-  if (!display.textContent.includes("."))
-    decimalBtn.removeAttribute("disabled");
-  b = Number(display.textContent) || 0;
-  display.textContent = operator(a, b);
-  a = Number(display.textContent);
-  b = null;
-  shouldClearDisplay = true;
+  checkDecimal();
 }
 
 // evaluate only one pair of digits at a time
