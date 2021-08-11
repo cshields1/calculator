@@ -24,6 +24,7 @@ let b = null;
 let operator = null;
 let shouldClearDisplay = false;
 
+window.addEventListener("keydown", getKeyboardInput);
 keypadBtns.forEach((button) => button.addEventListener("click", updateDisplay));
 signBtn.addEventListener("click", changeSign);
 operatorBtns.forEach((button) => button.addEventListener("click", setOperator));
@@ -31,17 +32,6 @@ equalsBtn.addEventListener("click", evaluate);
 decimalBtn.addEventListener("click", checkDecimal);
 backspaceBtn.addEventListener("click", deleteNumber);
 clearBtn.addEventListener("click", clearAll);
-
-window.addEventListener("keydown", getKeyboardInput);
-
-function updateDisplay() {
-  if (shouldClearDisplay) {
-    display.textContent = "";
-    checkDecimal();
-    shouldClearDisplay = false;
-  }
-  display.textContent += this.textContent;
-}
 
 function getKeyboardInput(e) {
   keypadBtns.forEach((button) => {
@@ -61,12 +51,13 @@ function getKeyboardInput(e) {
   if (e.key === "Escape") clearAll();
 }
 
-function changeSign() {
-  if (!display.textContent.includes("-")) {
-    display.textContent = "-" + display.textContent;
-  } else {
-    display.textContent = display.textContent.slice(1);
+function updateDisplay() {
+  if (shouldClearDisplay) {
+    display.textContent = "";
+    checkDecimal();
+    shouldClearDisplay = false;
   }
+  display.textContent += this.textContent;
 }
 
 function setOperator() {
@@ -110,8 +101,15 @@ function clearAll() {
   checkDecimal();
 }
 
+function changeSign() {
+  if (!display.textContent.includes("-")) {
+    display.textContent = "-" + display.textContent;
+  } else {
+    display.textContent = display.textContent.slice(1);
+  }
+}
+
 // TO DO
 // - round answers with long decimals
 // - throw an error if user tries to divide by 0 (animate?)
 // - differentiate operator and keypad button styles
-// - keyboard support
