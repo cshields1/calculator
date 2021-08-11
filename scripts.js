@@ -30,7 +30,7 @@ signBtn.addEventListener("click", changeSign);
 operatorBtns.forEach((button) => button.addEventListener("click", setOperator));
 equalsBtn.addEventListener("click", evaluate);
 decimalBtn.addEventListener("click", checkDecimal);
-backspaceBtn.addEventListener("click", deleteNumber);
+backspaceBtn.addEventListener("click", deleteLastNumber);
 clearBtn.addEventListener("click", clearAll);
 
 function getKeyboardInput(e) {
@@ -47,7 +47,7 @@ function getKeyboardInput(e) {
     }
   });
   if ((e.key === "Enter" || e.key === "=") && operator) evaluate();
-  if (e.key === "Backspace") deleteNumber();
+  if (e.key === "Backspace") deleteLastNumber();
   if (e.key === "Escape") clearAll();
 }
 
@@ -70,6 +70,12 @@ function setOperator() {
 function evaluate() {
   b = Number(display.textContent) || 0;
   display.textContent = operator(a, b);
+  if (display.textContent.includes(".")) {
+    display.textContent = Number(display.textContent).toPrecision(10);
+    while (display.textContent[display.textContent.length - 1] === "0") {
+      deleteLastNumber();
+    }
+  }
   a = Number(display.textContent);
   b = null;
   operator = null;
@@ -85,7 +91,7 @@ function checkDecimal() {
   }
 }
 
-function deleteNumber() {
+function deleteLastNumber() {
   display.textContent = display.textContent.slice(
     0,
     display.textContent.length - 1
@@ -110,6 +116,5 @@ function changeSign() {
 }
 
 // TO DO
-// - round answers with long decimals
 // - throw an error if user tries to divide by 0 (animate?)
 // - differentiate operator and keypad button styles
