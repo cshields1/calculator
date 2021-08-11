@@ -17,7 +17,7 @@ addBtn.operator = (a, b) => a + b;
 subtractBtn.operator = (a, b) => a - b;
 multiplyBtn.operator = (a, b) => a * b;
 divideBtn.operator = (a, b) =>
-  b === 0 ? "Division by zero is forbidden!" : a / b;
+  b === 0 ? alert("Division by zero is forbidden!") : a / b;
 
 let a = null;
 let b = null;
@@ -93,13 +93,8 @@ function clearAll() {
   checkDecimal();
 }
 
-// evaluate only one pair of digits at a time
-
-// round answers with long decimals
-
-// throw an error if user tries to divide by 0
-// - animate?
-
-// differentiate operator and keypad buttons
-
-// keyboard support
+// TO DO
+// - round answers with long decimals
+// - throw an error if user tries to divide by 0 (animate?)
+// - differentiate operator and keypad button styles
+// - keyboard support
