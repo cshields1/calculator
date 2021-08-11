@@ -11,7 +11,7 @@ const backspaceBtn = document.querySelector("#backspace");
 const clearBtn = document.querySelector("#clear");
 
 const display = document.querySelector("#display");
-display.textContent = "";
+display.textContent = "Let's calculate!";
 
 addBtn.operator = (a, b) => a + b;
 subtractBtn.operator = (a, b) => a - b;
@@ -22,7 +22,7 @@ divideBtn.operator = (a, b) =>
 let a = null;
 let b = null;
 let operator = null;
-let shouldClearDisplay = false;
+let shouldClearDisplay = true;
 
 window.addEventListener("keydown", getKeyboardInput);
 keypadBtns.forEach((button) => button.addEventListener("click", updateDisplay));
@@ -46,6 +46,7 @@ function getKeyboardInput(e) {
       setOperator(button);
     }
   });
+  if (e.key === "s") changeSign();
   if ((e.key === "Enter" || e.key === "=") && operator) evaluate();
   if (e.key === "Backspace") deleteLastNumber();
   if (e.key === "Escape") clearAll();
@@ -69,7 +70,7 @@ function setOperator() {
 
 function evaluate() {
   b = Number(display.textContent) || 0;
-  display.textContent = operator(a, b);
+  if (operator) display.textContent = operator(a, b);
   if (display.textContent.includes(".")) {
     display.textContent = Number(display.textContent).toPrecision(10);
     while (display.textContent[display.textContent.length - 1] === "0") {
@@ -108,10 +109,10 @@ function clearAll() {
 }
 
 function changeSign() {
-  if (!display.textContent.includes("-")) {
-    display.textContent = "-" + display.textContent;
-  } else {
+  if (display.textContent.includes("-")) {
     display.textContent = display.textContent.slice(1);
+  } else {
+    display.textContent = "-" + display.textContent;
   }
 }
 
