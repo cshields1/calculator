@@ -24,10 +24,7 @@ let b = null;
 let operator = null;
 let shouldClearDisplay = false;
 
-keypadBtns.forEach((button) => {
-  button.value = button.textContent;
-  button.addEventListener("click", updateDisplay);
-});
+keypadBtns.forEach((button) => button.addEventListener("click", updateDisplay));
 signBtn.addEventListener("click", changeSign);
 operatorBtns.forEach((button) => button.addEventListener("click", setOperator));
 equalsBtn.addEventListener("click", evaluate);
@@ -35,13 +32,33 @@ decimalBtn.addEventListener("click", checkDecimal);
 backspaceBtn.addEventListener("click", deleteNumber);
 clearBtn.addEventListener("click", clearAll);
 
+window.addEventListener("keydown", getKeyboardInput);
+
 function updateDisplay() {
   if (shouldClearDisplay) {
     display.textContent = "";
     checkDecimal();
     shouldClearDisplay = false;
   }
-  display.textContent += this.value;
+  display.textContent += this.textContent;
+}
+
+function getKeyboardInput(e) {
+  keypadBtns.forEach((button) => {
+    if (e.key === button.textContent) {
+      this.textContent = e.key;
+      updateDisplay();
+    }
+  });
+  operatorBtns.forEach((button) => {
+    if (e.key === button.textContent) {
+      this.operator = button.operator;
+      setOperator(button);
+    }
+  });
+  if ((e.key === "Enter" || e.key === "=") && operator) evaluate();
+  if (e.key === "Backspace") deleteNumber();
+  if (e.key === "Escape") clearAll();
 }
 
 function changeSign() {
