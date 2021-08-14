@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -21,9 +21,7 @@
     </header>
     <main>
       <div class="calculator">
-        <div class="display">
-          <p id="display"></p>
-        </div>
+        <p id="display"></p>
         <div class="buttons">
           <div class="keypad-btns">
             <button type="button" class="keypad">1</button>
@@ -39,15 +37,20 @@
             <button id="decimal" type="button" class="keypad">.</button>
             <button id="sign" type="button">(+/-)</button>
           </div>
-          <button id="add" type="button" class="operator">+</button>
-          <button id="subtract" type="button" class="operator">-</button>
-          <button id="multiply" type="button" class="operator">x</button>
-          <button id="divide" type="button" class="operator">/</button>
-          <button id="equals" type="button" class="">=</button>
-          <button id="backspace" type="button">BACKSPACE</button>
-          <button id="clear" type="button">CLEAR</button>
+          <div class="operator-btns">
+            <button id="add" type="button" class="operator">+</button>
+            <button id="subtract" type="button" class="operator">-</button>
+            <button id="multiply" type="button" class="operator">x</button>
+            <button id="divide" type="button" class="operator">/</button>
+            <button id="equals" type="button">=</button>
+            <button id="backspace" type="button">BACKSPACE</button>
+            <button id="clear" type="button">CLEAR</button>
+          </div>
         </div>
       </div>
     </main>
+    <footer>
+      <p>Made by Craig Shields for The Odin Project.</p>
+    </footer>
   </body>
 </html>
